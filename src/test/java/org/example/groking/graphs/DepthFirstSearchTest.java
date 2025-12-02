@@ -3,13 +3,16 @@ package org.example.groking.graphs;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.example.groking.graphs.DepthFirstSearch.Node;
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 @ExtendWith(InstancioExtension.class)
 class DepthFirstSearchTest {
@@ -21,25 +24,30 @@ class DepthFirstSearchTest {
     underTest = new DepthFirstSearch();
   }
 
-  @Test
-  void shouldFindSellerName() {
-    TestData testData = createTestDataWithNamedNodes();
-
+  @ParameterizedTest
+  @MethodSource("graphMapMethodSource")
+  void shouldFindSellerName(TestData testData, String expectedSellerName, int expectedStep) {
     String sellerName = underTest.findSellerName(testData.root, testData.graphs);
 
-    assertThat(sellerName).isEqualTo("Jane");
+    assertThat(sellerName).isEqualTo(expectedSellerName);
   }
 
-  @Test
-  void shouldCountStepToSeller() {
-    TestData testData = createTestDataWithNamedNodes();
-
+  @ParameterizedTest
+  @MethodSource("graphMapMethodSource")
+  void shouldCountStepToSeller(TestData testData, String expectedSellerName, int expectedStep) {
     int step = underTest.findStepToSeller(testData.root, testData.graphs);
 
-    assertThat(step).isEqualTo(4);
+    assertThat(step).isEqualTo(expectedStep);
   }
 
-  private TestData createTestDataWithNamedNodes() {
+  private static List<Arguments> graphMapMethodSource() {
+    return List.of(
+        Arguments.of(createTestDataWithNamedNodes(), "Jane", 4),
+        Arguments.of(createTestDataWithLetterNodes(), "M", 5)
+    );
+  }
+
+  private static TestData createTestDataWithNamedNodes() {
     Node anne = new Node("Anne", false);
     Node dorris = new Node("Dorris", false);
     Node brant = new Node("Brant", false);
@@ -60,7 +68,7 @@ class DepthFirstSearchTest {
     return new TestData(anne, graphs);
   }
 
-  private TestData createTestDataWithLetterNodes() {
+  private static TestData createTestDataWithLetterNodes() {
     Map<String, Node> nodes = new HashMap<>();
     Map<Node, Set<Node>> graphs = new HashMap<>();
     for (char ch = 'A'; ch <= 'Q'; ch++) {
@@ -68,9 +76,9 @@ class DepthFirstSearchTest {
 
       if (letter.equals("M")) {
         nodes.put(letter, new Node(letter, true));
+      } else {
+        nodes.put(letter, new Node(letter, false));
       }
-
-      nodes.put(letter, new Node(letter, false));
     }
 
     Node nodeA = nodes.get("A");

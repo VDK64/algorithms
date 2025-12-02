@@ -18,7 +18,7 @@ public class DepthFirstSearch {
         if (element.seller) {
           return element.name();
         } else {
-          searchingQueue.addAll(graphs.get(element));
+          searchingQueue.addAll(graphs.getOrDefault(element, Set.of()));
           searched.add(element);
         }
       }
@@ -45,7 +45,7 @@ public class DepthFirstSearch {
         if (element.seller()) {
           return step;
         } else {
-          nested.addAll(graphs.get(element));
+          nested.addAll(graphs.getOrDefault(element, Set.of()));
           searched.add(element);
         }
       }
