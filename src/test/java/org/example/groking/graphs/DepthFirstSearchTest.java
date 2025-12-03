@@ -2,6 +2,7 @@ package org.example.groking.graphs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,8 @@ import java.util.Set;
 import org.example.groking.graphs.DepthFirstSearch.Node;
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -38,6 +41,82 @@ class DepthFirstSearchTest {
     int step = underTest.findStepToSeller(testData.root, testData.graphs);
 
     assertThat(step).isEqualTo(expectedStep);
+  }
+
+  @Test
+  void shouldReturnAllFiles_when_DepthFirstAlgorithm() {
+    TestData testData = createTestDataForGetAllFiles();
+
+    List<String> fileNames = underTest.getAllFilesDepthFirstAlgorithm(testData.root,
+        testData.graphs());
+
+    assertThat(fileNames).containsExactlyInAnyOrder("odyssey.png", "a.png", "space.png");
+  }
+
+  @Test
+  void shouldReturnAllFiles_when_BreadthFirstAlgorithm() {
+    TestData testData = createTestDataForGetAllFiles();
+
+    List<String> fileNames = underTest.getAllFilesBreadthFirstAlgorithm(
+        testData.root(), testData.graphs(), new ArrayList<>());
+
+    assertThat(fileNames).containsExactlyInAnyOrder("odyssey.png", "a.png", "space.png");
+  }
+
+  @Disabled
+  @Test
+  void shouldTopologicalSort() {
+    TestData testData = createTestDataForSort();
+    List<String> sortNodeNames = underTest.topologicalSort(testData.root, testData.graphs);
+    List<String> firstExpectedVariant = List.of("A", "B", "D", "E", "F");
+    List<String> secondExpectedVariant = List.of("A", "B", "D", "E", "G");
+    List<String> thirdExpectedVariant = List.of("A", "B", "D", "E", "H");
+    List<String> fourthExpectedVariant = List.of("A", "C", "D", "E", "F");
+    List<String> fifthExpectedVariant = List.of("A", "C", "D", "E", "G");
+    List<String> sixthExpectedVariant = List.of("A", "C", "D", "E", "H");
+
+    assertThat(sortNodeNames).satisfiesAnyOf(
+        s -> assertThat(s).isEqualTo(firstExpectedVariant),
+        s -> assertThat(s).isEqualTo(secondExpectedVariant),
+        s -> assertThat(s).isEqualTo(thirdExpectedVariant),
+        s -> assertThat(s).isEqualTo(fourthExpectedVariant),
+        s -> assertThat(s).isEqualTo(fifthExpectedVariant),
+        s -> assertThat(s).isEqualTo(sixthExpectedVariant)
+    );
+  }
+
+  private TestData createTestDataForGetAllFiles() {
+    Node pics = new Node("pics", false);
+    Node odyssey = new Node("odyssey.png", true);
+    Node innerFile = new Node("2001", false);
+    Node a = new Node("a.png", true);
+    Node space = new Node("space.png", true);
+
+    Map<Node, Set<Node>> graphs = new HashMap<>();
+    graphs.put(pics, Set.of(odyssey, innerFile));
+    graphs.put(innerFile, Set.of(a, space));
+    return new TestData(pics, graphs);
+  }
+
+  private static TestData createTestDataForSort() {
+    Node nodeA = new Node("A", false);
+    Node nodeB = new Node("B", false);
+    Node nodeC = new Node("C", false);
+    Node nodeD = new Node("D", false);
+    Node nodeE = new Node("E", false);
+    Node nodeF = new Node("F", false);
+    Node nodeG = new Node("G", false);
+    Node nodeH = new Node("H", false);
+
+    Map<Node, Set<Node>> graphs = new HashMap<>();
+
+    graphs.put(nodeA, Set.of(nodeB, nodeC));
+    graphs.put(nodeB, Set.of(nodeD));
+    graphs.put(nodeC, Set.of(nodeD));
+    graphs.put(nodeD, Set.of(nodeE));
+    graphs.put(nodeE, Set.of(nodeF, nodeG, nodeH));
+
+    return new TestData(nodeA, graphs);
   }
 
   private static List<Arguments> graphMapMethodSource() {
