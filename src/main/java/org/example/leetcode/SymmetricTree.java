@@ -1,78 +1,31 @@
 package org.example.leetcode;
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 public class SymmetricTree {
 
+
   public boolean isSymmetric(TreeNode root) {
-    Deque<TreeNode> searchingQueue = new LinkedList<>();
-    searchingQueue.add(root.left);
-    searchingQueue.add(root.right);
-
-    List<TreeNode> nested = new ArrayList<>();
-    List<Integer> vertexes = new ArrayList<>();
-    boolean checkSymmetry = false;
-
-    while (!searchingQueue.isEmpty() || !nested.isEmpty()) {
-      if (searchingQueue.isEmpty()) {
-        searchingQueue.addAll(nested);
-        nested.clear();
-        checkSymmetry = true;
-      }
-
-      TreeNode element = searchingQueue.pollFirst();
-
-      addNestedNodes(element, nested);
-
-      if (checkSymmetry/* || nested.isEmpty()*/) {
-        if (!isSymmetric(vertexes)) {
-          return false;
-        }
-
-        vertexes.clear();
-        checkSymmetry = false;
-      }
-
-      vertexes.add(element.val);
-
+    if (root == null) {
+      return false;
     }
 
-    return isSymmetric(vertexes);
+    return isSymmetric(root.left, root.right);
   }
 
-  private void addNestedNodes(TreeNode element, List<TreeNode> nested) {
-    TreeNode left = element.left;
-    TreeNode right = element.right;
-    if (left != null) {
-      nested.add(left);
+  private boolean isSymmetric(TreeNode left, TreeNode right) {
+    if (left == null && right == null) {
+      return true;
     }
-    if (right != null) {
-      nested.add(right);
+
+    if (left == null || right == null) {
+      return false;
     }
+
+    return (left.val == right.val)
+        && isSymmetric(left.left, right.right)
+        && isSymmetric(left.right, right.left);
   }
-
-  private boolean isSymmetric(List<Integer> vertexes) {
-    if (vertexes.size() == 2) {
-      return vertexes.get(0).equals(vertexes.get(1));
-    } else {
-      for (int i = 0; i < vertexes.size() / 2; i++) {
-        Integer left = vertexes.get(i);
-        Integer right = vertexes.get(vertexes.size() - 1 - i);
-        if (!left.equals(right)) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
-
 
   public static final class TreeNode {
 

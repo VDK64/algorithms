@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import org.example.leetcode.SymmetricTree.TreeNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -28,10 +29,17 @@ class SymmetricTreeTest {
     assertThat(result).isEqualTo(expected);
   }
 
+  @Test
+  void shouldReturnIsSymmetric() {
+    boolean result = underTest.isSymmetric(new TreeNode(1));
+
+    assertThat(result).isEqualTo(true);
+  }
+
   static Stream<Arguments> argumentSources() {
     return Stream.of(
-        Arguments.of(createSecondTreeNode(), false)
-//        Arguments.of(createFirstTreeNode(), true)
+        Arguments.of(createSecondTreeNode(), false),
+        Arguments.of(createFirstTreeNode(), true)
     );
   }
 
