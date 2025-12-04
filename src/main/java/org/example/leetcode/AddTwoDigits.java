@@ -1,30 +1,24 @@
 package org.example.leetcode;
 
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class AddTwoDigits {
 
   public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-    int remainder = 0;
-    boolean cont = true;
-    Deque<ListNode> nodes = new LinkedList<>();
+    ListNode dummy = new ListNode(0);
+    ListNode temp = dummy;
+    int carry = 0;
 
-    while (cont) {
-      Integer first = null;
-      Integer second = null;
-      if (l1 != null) {
-        first = l1.val;
-      }
-      if (l2 != null) {
-        second = l2.val;
-      }
+    while (l1 != null || l2 != null || carry != 0) {
+      int x = (l1 != null) ? l1.val : 0;
+      int y = (l2 != null) ? l2.val : 0;
 
-      if (first == null && second == null && remainder == 0) {
-        cont = false;
-        continue;
-      }
+      int sum = x + y + carry;
+      int digit = sum % 10;
+      carry = sum / 10;
+
+      temp.next = new ListNode(digit);
+      temp = temp.next;
 
       if (l1 != null) {
         l1 = l1.next;
@@ -33,35 +27,9 @@ public class AddTwoDigits {
         l2 = l2.next;
       }
 
-      int result = 0;
-      if (first != null && second != null) {
-        result = first + second;
-      } else if (first != null) {
-        result = first;
-      } else if (second != null) {
-        result = second;
-      }
-
-      if (remainder > 0) {
-        result += remainder;
-        remainder = 0;
-      }
-
-      if (result > 9) {
-        remainder = result / 10;
-        result = result % 10;
-      }
-
-      ListNode resultNode = new ListNode();
-      resultNode.val = result;
-      ListNode last = nodes.peekLast();
-      if (last != null) {
-        last.next = resultNode;
-      }
-      nodes.add(resultNode);
     }
 
-    return nodes.getFirst();
+    return dummy.next;
   }
 
   public static final class ListNode {
