@@ -57,7 +57,6 @@ class DijkstrasAlgorithmTest {
         graph,
         parents,
         costs,
-        "S",
         "E"
     );
 

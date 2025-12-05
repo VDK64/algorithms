@@ -5,7 +5,6 @@ import static java.util.Comparator.comparingInt;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -60,14 +59,12 @@ public class DijkstrasAlgorithm {
       Map<String, Map<String, Integer>> graph,
       Map<String, String> parents,
       Map<String, Integer> costs,
-      String start, String end) {
+      String end) {
 
     Set<String> processed = new HashSet<>();
-    Queue<String> queue = new LinkedList<>();
-    queue.add(start);
+    String currentNode = findMinimalCost(costs, processed);
 
-    while (!queue.isEmpty()) {
-      String currentNode = queue.poll();
+    while (currentNode != null) {
       Map<String, Integer> relates = graph.get(currentNode);
 
       for (Entry<String, Integer> entry : relates.entrySet()) {
@@ -80,12 +77,12 @@ public class DijkstrasAlgorithm {
         if (result < costs.get(key) && !processed.contains(currentNode)) {
           parents.put(key, currentNode);
           costs.put(key, result);
-          queue.add(key);
         }
 
       }
 
       processed.add(currentNode);
+      currentNode = findMinimalCost(costs, processed);
     }
 
     List<String> path = new ArrayList<>();
@@ -98,6 +95,14 @@ public class DijkstrasAlgorithm {
 
     Collections.reverse(path);
     return path;
+  }
+
+  private String findMinimalCost(Map<String, Integer> costs, Set<String> processed) {
+    return costs.entrySet().stream()
+        .filter(e -> !processed.contains(e.getKey()))
+        .min(comparingInt(Entry::getValue))
+        .map(Entry::getKey)
+        .orElse(null);
   }
 
   private List<String> findShortestPathWithNodes(Node end) {
