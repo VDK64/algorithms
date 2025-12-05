@@ -1,4 +1,4 @@
-package org.example.groking.graphs;
+package org.example.groking;
 
 import java.util.ArrayList;
 import java.util.Deque;

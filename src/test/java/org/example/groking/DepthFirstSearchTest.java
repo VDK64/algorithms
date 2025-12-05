@@ -1,4 +1,4 @@
-package org.example.groking.graphs;
+package org.example.groking;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.example.groking.graphs.DepthFirstSearch.Node;
+import org.example.groking.DepthFirstSearch.Node;
 import org.instancio.junit.InstancioExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
