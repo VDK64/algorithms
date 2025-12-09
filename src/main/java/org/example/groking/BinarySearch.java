@@ -2,7 +2,7 @@ package org.example.groking;
 
 import java.util.Arrays;
 
-public class BinarySearch {
+public class  BinarySearch {
 
   public int search(int[] input, int target) {
     int[] sorted = Arrays.stream(input)
