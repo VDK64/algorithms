@@ -1,5 +1,7 @@
 package org.example.util;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -8,10 +10,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
+import net.datafaker.Faker;
 
 public class TestUtil {
 
+  public static final Faker DATA_FAKER = new Faker();
   public static final String SPLITTER = ",";
   public static final String LARGE_ARRAY_DATA_FILE = "large_array.txt";
 
@@ -30,7 +35,7 @@ public class TestUtil {
   private static Path getPath(String filePath) {
     try {
       URL resourceUrl = TestUtil.class.getClassLoader().getResource(filePath);
-      return Paths.get(resourceUrl.toURI());
+      return Paths.get(requireNonNull(resourceUrl).toURI());
     } catch (URISyntaxException e) {
       throw new RuntimeException(e);
     }
