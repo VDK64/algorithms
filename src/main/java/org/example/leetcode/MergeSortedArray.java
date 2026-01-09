@@ -4,7 +4,7 @@ public class MergeSortedArray {
 
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         int right = m + n - 1;
-        int last = m-1;
+        int last = m - 1;
         int current = n - 1;
 
         while (current > -1) {

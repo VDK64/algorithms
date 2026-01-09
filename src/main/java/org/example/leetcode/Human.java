@@ -3,40 +3,40 @@ package org.example.leetcode;
 import java.util.Objects;
 
 public class Human {
-  private int age;
+    private int age;
 
-  public Human(int age) {
-    this.age = age;
-  }
-
-  public int getAge() {
-    return age;
-  }
-
-  public void setAge(int age) {
-    this.age = age;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public Human(int age) {
+        this.age = age;
     }
-    if (!(o instanceof Human human)) {
-      return false;
+
+    public int getAge() {
+        return age;
     }
-    return age == human.age;
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(age);
-  }
+    public void setAge(int age) {
+        this.age = age;
+    }
 
-  @Override
-  public String toString() {
-    return "Human{" +
-        "age=" + age +
-        '}';
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Human human)) {
+            return false;
+        }
+        return age == human.age;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(age);
+    }
+
+    @Override
+    public String toString() {
+        return "Human{" +
+                "age=" + age +
+                '}';
+    }
 }

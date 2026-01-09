@@ -4,64 +4,64 @@ import java.util.Arrays;
 
 public class SelectionSort {
 
-  public int[] sortAscending(int[] input) {
-    int[] tempArray = Arrays.copyOf(input, input.length);
-    int[] result = new int[input.length];
-    int currentIndex = 0;
-    int smallestIndex = 0;
+    public int[] sortAscending(int[] input) {
+        int[] tempArray = Arrays.copyOf(input, input.length);
+        int[] result = new int[input.length];
+        int currentIndex = 0;
+        int smallestIndex = 0;
 
-    for (int i = 0; i < input.length; i++) {
-      smallestIndex = findSmallestIndex(tempArray);
-      result[currentIndex] = input[smallestIndex];
-      currentIndex++;
+        for (int i = 0; i < input.length; i++) {
+            smallestIndex = findSmallestIndex(tempArray);
+            result[currentIndex] = input[smallestIndex];
+            currentIndex++;
+        }
+
+        return result;
     }
 
-    return result;
-  }
+    public int[] sortDescending(int[] input) {
+        int[] tempArray = Arrays.copyOf(input, input.length);
+        int[] result = new int[input.length];
+        int currentIndex = 0;
+        int biggestIndex = 0;
 
-  public int[] sortDescending(int[] input) {
-    int[] tempArray = Arrays.copyOf(input, input.length);
-    int[] result = new int[input.length];
-    int currentIndex = 0;
-    int biggestIndex = 0;
+        for (int i = 0; i < input.length; i++) {
+            biggestIndex = findBiggestIndex(tempArray);
+            result[currentIndex] = input[biggestIndex];
+            currentIndex++;
+        }
 
-    for (int i = 0; i < input.length; i++) {
-      biggestIndex = findBiggestIndex(tempArray);
-      result[currentIndex] = input[biggestIndex];
-      currentIndex++;
+        return result;
     }
 
-    return result;
-  }
+    private int findBiggestIndex(int[] input) {
+        int biggestIndex = 0;
+        int biggestValue = input[biggestIndex];
 
-  private int findBiggestIndex(int[] input) {
-    int biggestIndex = 0;
-    int biggestValue = input[biggestIndex];
+        for (int i = 0; i < input.length; i++) {
+            if (biggestValue < input[i]) {
+                biggestIndex = i;
+                biggestValue = input[i];
+            }
+        }
 
-    for (int i = 0; i < input.length; i++) {
-      if (biggestValue < input[i]) {
-        biggestIndex = i;
-        biggestValue = input[i];
-      }
+        input[biggestIndex] = Integer.MIN_VALUE;
+
+        return biggestIndex;
     }
 
-    input[biggestIndex] = Integer.MIN_VALUE;
+    private int findSmallestIndex(int[] input) {
+        int smallestIndex = 0;
+        int smallestValue = input[smallestIndex];
 
-    return biggestIndex;
-  }
+        for (int i = 0; i < input.length; i++) {
+            if (smallestValue > input[i]) {
+                smallestIndex = i;
+                smallestValue = input[i];
+            }
+        }
 
-  private int findSmallestIndex(int[] input) {
-    int smallestIndex = 0;
-    int smallestValue = input[smallestIndex];
-
-    for (int i = 0; i < input.length; i++) {
-      if (smallestValue > input[i]) {
-        smallestIndex = i;
-        smallestValue = input[i];
-      }
+        input[smallestIndex] = Integer.MAX_VALUE;
+        return smallestIndex;
     }
-
-    input[smallestIndex] = Integer.MAX_VALUE;
-    return smallestIndex;
-  }
 }

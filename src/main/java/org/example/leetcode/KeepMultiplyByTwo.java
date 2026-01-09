@@ -4,41 +4,41 @@ import java.util.Arrays;
 
 public class KeepMultiplyByTwo {
 
-  public static int findFinalValueWithSorting(int[] nums, int original) {
-    int[] sortedNums = Arrays.stream(nums)
-        .sorted()
-        .toArray();
+    public static int findFinalValueWithSorting(int[] nums, int original) {
+        int[] sortedNums = Arrays.stream(nums)
+                .sorted()
+                .toArray();
 
-    for (int current : sortedNums) {
-      if (current == original) {
-        original *= 2;
-      }
+        for (int current : sortedNums) {
+            if (current == original) {
+                original *= 2;
+            }
+        }
+
+        return original;
     }
 
-    return original;
-  }
+    public static int findFinalValue(int[] nums, int original) {
+        boolean isFoundInArray = true;
 
-  public static int findFinalValue(int[] nums, int original) {
-    boolean isFoundInArray = true;
+        while (isFoundInArray) {
+            isFoundInArray = isFound(nums, original);
 
-    while (isFoundInArray) {
-      isFoundInArray = isFound(nums, original);
+            if (isFoundInArray) {
+                original *= 2;
+            }
+        }
 
-      if (isFoundInArray) {
-        original *= 2;
-      }
+        return original;
     }
 
-    return original;
-  }
+    public static boolean isFound(int[] nums, int var) {
+        for (int current : nums) {
+            if (current == var) {
+                return true;
+            }
+        }
 
-  public static boolean isFound(int[] nums, int var) {
-    for (int current : nums) {
-      if (current == var) {
-        return true;
-      }
+        return false;
     }
-
-    return false;
-  }
 }
