@@ -1,5 +1,6 @@
 package org.example.leetcode;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -44,5 +45,40 @@ public class LongestSubstring {
         }
 
         return result;
+    }
+
+    public int anotherOneSolution(String s) {
+        Set<Character> letters = new HashSet<>();
+        int counter = 0;
+        int maxLength = 0;
+        int left = 0;
+        int right = 0;
+
+        char[] chars = s.toCharArray();
+
+        while (left < s.length() && right < s.length()) {
+            if (!letters.contains(chars[right])) {
+                letters.add(chars[right]);
+                counter = right - left + 1;
+            } else {
+                for (int i = left; i < right; i++) {
+                    char currentChar = chars[i];
+                    letters.remove(currentChar);
+                    if (currentChar == chars[right]) {
+                        left = i + 1;
+                        counter = right - left + 1;
+                        letters.add(chars[right]);
+                        break;
+                    }
+                }
+            }
+            if (maxLength < counter) {
+                maxLength = counter;
+            }
+
+            right++;
+        }
+
+        return maxLength;
     }
 }
