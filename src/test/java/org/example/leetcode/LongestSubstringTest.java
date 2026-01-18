@@ -27,7 +27,7 @@ class LongestSubstringTest {
             "bbbbb,             1"
     })
     void shouldGetSubstring(String input, int expected) {
-        int result = underTest.anotherOneSolution(input);
+        int result = underTest.lengthOfLongestSubstring(input);
 
         assertThat(result).isEqualTo(expected);
     }
@@ -35,7 +35,7 @@ class LongestSubstringTest {
     @Test
     void shouldGetSubstring_when_EmptyInput() {
         String empty = " ";
-        int result = underTest.anotherOneSolution(empty);
+        int result = underTest.lengthOfLongestSubstring(empty);
 
         assertThat(result).isEqualTo(1);
     }
