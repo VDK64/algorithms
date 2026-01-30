@@ -27,7 +27,10 @@ class HIndexTest {
 
     private static Stream<Arguments> methodSource() {
         return Stream.of(
+                Arguments.of(new int[]{0, 1, 1, 2, 3, 3, 3}, 3),
                 Arguments.of(new int[]{3, 0, 6, 1, 5}, 3),
+                Arguments.of(new int[]{100}, 1),
+                Arguments.of(new int[]{0}, 0),
                 Arguments.of(new int[]{1, 3, 1}, 1)
         );
     }
