@@ -39,5 +39,34 @@ public class QuickSort {
         return result;
     }
 
+    public int[] sort(int[] input) {
+        quickSort(input, 0, input.length - 1);
+
+        return input;
+    }
+
+    private void quickSort(int[] input, int low, int high) {
+        if (low>=high) return;
+        int pivotIndex = low + (high - low) / 2;
+        int pivot = input[pivotIndex];
+        int i = low;
+        int j = high;
+
+        while (i <= j) {
+            while (input[i] < pivot) i++;
+            while (input[j] > pivot) j--;
+
+            if (i <= j) {
+                int temp = input[j];
+                input[j] = input[i];
+                input[i] = temp;
+                i++;
+                j--;
+            }
+        }
+        if (low < j) quickSort(input, low, j);
+        if (high > j) quickSort(input, i, high);
+    }
+
 
 }

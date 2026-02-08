@@ -6,7 +6,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -31,11 +33,28 @@ class QuickSortTest {
     }
 
     @ParameterizedTest
+    @MethodSource("withoutCollection")
+    void should_QuickSort_when_InputProvidedInArray(int[]input) {
+        int[] result = underTest.sort(input);
+        Arrays.sort(input);
+
+        assertThat(result).isEqualTo(input);
+    }
+
+    @ParameterizedTest
     @NullAndEmptySource
     void should_QuickSort_when_NoInput(List<Integer> input) {
         List<Integer> algoSorted = underTest.sort(input);
 
         assertThat(algoSorted).isEmpty();
+    }
+
+    private static Stream<Arguments> withoutCollection() {
+        return Stream.of(
+                Arguments.of(new int[]{1, 3, 2, 5, 4, 2, 8, 5}),
+                Arguments.of(new int[]{1, 2, 3, 4, 1, 3, 4, 5, 13, 451, 3453, 4523, 45, 61, 1, 342345345, 5,
+                        31, 12435, 1, 345, 13, 45, 6, 7, 8, 5, 4, 3, 6, 7})
+        );
     }
 
     private static Stream<Arguments> provideArraysForTesting() {

@@ -2,6 +2,7 @@ package org.example.leetcode;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class RomanToInteger {
 
@@ -15,31 +16,35 @@ public class RomanToInteger {
         put('M', 1000);
     }};
 
+    private static final Map<Character, Set<Character>> SUBTRACT = new LinkedHashMap<>() {{
+        put('I', Set.of('V', 'X'));
+        put('X', Set.of('L', 'C'));
+        put('C', Set.of('D', 'M'));
+    }};
+
     public int romanToInt(String s) {
         char[] chars = s.toCharArray();
         int result = 0;
-        boolean isSkipNext = false;
 
         for (int i = 0; i < chars.length; i++) {
-            if (isSkipNext) {
-                isSkipNext = false;
-                continue;
+            char current = chars[i];
+            char nextChar = Character.MIN_VALUE;
+            if (i + 1 < chars.length) {
+                nextChar = chars[i + 1];
             }
+            Set<Character> subtractions = SUBTRACT.get(current);
+            Integer currentCost = LITERALS.get(current);
 
-            char currentChar = chars[i];
-            Integer currentValue = LITERALS.get(chars[i]);
-            if (i == chars.length - 1) {
-                result += LITERALS.get(currentChar);
-            } else {
-                char nextChar = chars[i + 1];
-                Integer nextValue = LITERALS.get(chars[i + 1]);
+            if (subtractions != null && subtractions.contains(nextChar)) {
+                Integer nextCost = LITERALS.get(nextChar);
+                int temp = nextCost - currentCost;
+                result += temp;
 
-                if (currentValue >= nextValue) {
-                    result += currentValue;
-                } else if (currentChar == 'I' || currentChar == 'X' || currentChar == 'C') {
-                    result += nextValue - currentValue;
-                    isSkipNext = true;
+                if (i + 1 < chars.length) {
+                    i++;
                 }
+            } else {
+                result += currentCost;
             }
         }
 
