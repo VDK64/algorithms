@@ -28,7 +28,7 @@ class LongestCommonPrefixTest {
     private static Stream<Arguments> methodSource() {
         return Stream.of(
                 Arguments.of(new String[]{"flower", "flow", "flight"}, "fl"),
-                Arguments.of(new String[]{"ab","a"}, "a"),
+                Arguments.of(new String[]{"ab", "a"}, "a"),
                 Arguments.of(new String[]{}, ""),
                 Arguments.of(new String[]{"a"}, "a"),
                 Arguments.of(new String[]{"dog", "racecar", "car"}, "")

@@ -46,7 +46,7 @@ public class QuickSort {
     }
 
     private void quickSort(int[] input, int low, int high) {
-        if (low>=high) return;
+        if (low >= high) return;
         int pivotIndex = low + (high - low) / 2;
         int pivot = input[pivotIndex];
         int i = low;

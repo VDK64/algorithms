@@ -29,7 +29,7 @@ class IntegerToRomanTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1, 15,100,150,155,1500,1555,3999})
+    @ValueSource(ints = {1, 15, 100, 150, 155, 1500, 1555, 3999})
     void should(int input) {
         underTest.intToRoman(input);
     }

@@ -13,9 +13,9 @@ public class IntegerToRoman {
             int value = values[i];
             String symbol = symbols[i];
 
-            while (num>=value){
+            while (num >= value) {
                 result.append(symbol);
-                num-=value;
+                num -= value;
             }
         }
 

@@ -27,7 +27,7 @@ class FirstAndLastPositionInSortedArrayTest {
 
     private static Stream<Arguments> methodSource() {
         return Stream.of(
-                Arguments.of(new int[]{1,1,1,2,4,4,4,5,5,5,5,6,7,8,8,9,9,9,9,9,9,10}, 9, new int[]{15, 20}),
+                Arguments.of(new int[]{1, 1, 1, 2, 4, 4, 4, 5, 5, 5, 5, 6, 7, 8, 8, 9, 9, 9, 9, 9, 9, 10}, 9, new int[]{15, 20}),
                 Arguments.of(new int[]{1, 1, 1, 1, 1, 1, 2, 3, 4, 4, 5, 5, 5, 6, 7, 8, 8, 8, 8}, 8, new int[]{15, 18}),
                 Arguments.of(new int[]{5, 8, 8, 9, 10, 11, 12, 12}, 8, new int[]{1, 2}),
                 Arguments.of(new int[]{5, 7, 7, 8, 8, 10}, 8, new int[]{3, 4}),
